@@ -1,0 +1,37 @@
+# -*- mode: ruby -*-
+# vi: set ft=ruby :
+
+# All Vagrant configuration is done below. The "2" in Vagrant.configure
+# configures the configuration version (we support older styles for
+# backwards compatibility). Please don't change it unless you know what
+# you're doing.
+Vagrant.configure("2") do |config|
+  # The most common configuration options are documented and commented below.
+  # For a complete reference, please see the online documentation at
+  # https://docs.vagrantup.com.
+
+  # Every Vagrant development environment requires a box. You can search for
+  # boxes at https://vagrantcloud.com/search.
+  config.vm.box = "windows2022core"
+  config.vm.guest = "windows"
+  config.vm.synced_folder '.', '/vagrant', disabled: true
+  config.ssh.shell = "powershell"
+  config.ssh.insert_key = false
+
+  config.vm.define :dc01 do |dc01|
+	dc01.vm.hostname = "dc01"
+    #dc01.vm.provision "shell", inline: "install-windowsfeature AD-Domain-Services"
+	#dc01.vm.provision "shell", inline: "install-addsforest -force -domainname domain.test -installdns -safemodeadministratorpassword (convertto-securestring 'NotSecure1@' -asplaintext -force)"
+  end
+
+  config.vm.define :dc02 do |dc02|
+	dc02.vm.hostname = "dc02"
+    #dc02.vm.provision "shell", inline: "install-windowsfeature AD-Domain-Services"
+  end
+
+  config.vm.define :win03 do |win03|
+    win03.vm.box = "windows2022desktop"
+	win03.vm.hostname = "win03"
+  end
+  
+end
