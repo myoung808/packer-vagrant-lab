@@ -55,7 +55,7 @@ source "hyperv-iso" "vm" {
 	vm_name = "Windows2022Desktop"
 	ssh_username = "Administrator"
 	ssh_password = "${var.admin_pass}"
-	ssh_timeout = "15m"
+	#ssh_timeout = "15m"
 }
 
 build {
