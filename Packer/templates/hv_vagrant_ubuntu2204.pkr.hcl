@@ -39,7 +39,9 @@ source "hyperv-iso" "vm" {
 		"<wait3m><tab><tab><enter>",
 		"<wait5><enter>",
 		"<wait1m>vagrant<enter><wait>vagrant<enter>",
-		"<wait10>sudo apt -y install linux-azure<enter><wait>vagrant<enter>",
+		"<wait10>sudo -Hi<enter><wait>vagrant<enter>",
+		"<wait>echo \"vagrant ALL=(ALL) NOPASSWD: ALL\" > /etc/sudoers.d/vagrant<enter>",
+		"<wait>apt -y install linux-azure ansible<enter>",
 		"<wait3m><enter>",
 		"<wait>reboot<enter>",
 		""		
@@ -49,13 +51,13 @@ source "hyperv-iso" "vm" {
 	memory = "${var.memory}"
 	enable_dynamic_memory = true
 	output_directory = "Ubuntu2204"
-	shutdown_command = "shutdown -h now"
+	shutdown_command = "sudo shutdown -h now"
 	switch_name = "Default Switch"
 	vm_name = "Ubuntu2204"
 	ssh_username = "vagrant"
 	ssh_password = "vagrant"
 	#ssh_timeout = "15m"
-	pause_before_connecting = "90s"
+	pause_before_connecting = "30s"
 	
 }
 
