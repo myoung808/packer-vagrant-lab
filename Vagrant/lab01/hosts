@@ -1,0 +1,6 @@
+addc:
+  hosts:
+    dc01:
+    dc02:
+  vars:
+    ansible_shell_type: powershell
