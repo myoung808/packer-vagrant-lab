@@ -30,13 +30,12 @@ source "qemu" "vm" {
 	iso_url = "https://releases.ubuntu.com/24.04.2/ubuntu-24.04.2-live-server-amd64.iso"
 	boot_command = [
 		"<enter>", # grub
-		"<wait30s><enter>", # language
-		"<wait><enter>", # install update
+		"<wait35s><enter>", # language
 		"<wait><enter>", # keyboard
 		"<wait><enter>", # install type
 		"<wait><enter>", # network
 		"<wait><enter>", # proxy
-		"<wait10><enter>", # mirror
+		"<wait15><enter>", # mirror
 		"<wait><down><down><down><down><down><enter>",
 		"<wait><enter>",
 		"<wait><down><enter>",
@@ -44,12 +43,12 @@ source "qemu" "vm" {
 		"<wait><enter>",
 		"<wait><enter><wait><down><down><enter>",
 		"<wait><tab><wait><enter>",
-		"<wait3m><tab><tab><enter>",
+		"<wait4m><tab><tab><enter>",
 		"<wait5><enter>",
 		"<wait1m>vagrant<enter><wait>vagrant<enter>",
 		"<wait10>sudo -Hi<enter><wait>vagrant<enter>",
 		"<wait>echo \"vagrant ALL=(ALL) NOPASSWD: ALL\" > /etc/sudoers.d/vagrant<enter>",
-		"<wait>apt -y install linux-azure ansible<enter>",
+		"<wait>apt -y install ansible<enter>",
 		"<wait3m><enter>",
 		"<wait>reboot<enter>",
 		""		
@@ -59,7 +58,7 @@ source "qemu" "vm" {
 	memory = "${var.memory}"
 	output_directory = "Ubuntu2404"
 	shutdown_command = "sudo shutdown -h now"
-	net_bridge = "virbr0"
+	#net_bridge = "virbr0"
 	vm_name = "Ubuntu2404"
 	ssh_username = "vagrant"
 	ssh_password = "vagrant"
@@ -72,17 +71,17 @@ build {
 	sources = ["source.qemu.vm"]
 	
 	provisioner "file" {
-		source = "files\\vagrant.pub"
+		source = "files/vagrant.pub"
 		destination = "/home/vagrant/.ssh/authorized_keys"
 	}
 	
 	post-processor "shell-local" {
 		inline = [
-			"copy files\\qemu-metadata.json Ubuntu2404\\metadata.json",
+			"cp files/qemu-metadata.json Ubuntu2404/metadata.json",
 			"cd Ubuntu2404",
-			"tar.exe -cvzf ..\\Vagrant\\ubuntu2404.box .\\*",
+			"tar -cvzf ../Vagrant/ubuntu2404.box ./*",
 			"vagrant box remove ubuntu2404",
-			"vagrant box add --name ubuntu2404 ..\\Vagrant\\ubuntu2404.box"
+			"vagrant box add --name ubuntu2404 ../Vagrant/ubuntu2404.box"
 		]
 	}
 }
