@@ -80,8 +80,7 @@ build {
 			"cp files/qemu-metadata.json Ubuntu2404/metadata.json",
 			"cd Ubuntu2404",
 			"tar -cvzf ../Vagrant/ubuntu2404.box ./*",
-			"vagrant box remove ubuntu2404",
-			"vagrant box add --name ubuntu2404 ../Vagrant/ubuntu2404.box"
+			"vagrant box add --force --name ubuntu2404 ../Vagrant/ubuntu2404.box"
 		]
 	}
 }
